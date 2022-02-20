@@ -11,7 +11,6 @@ public:
     int c;
     int z;
     int res;
-
     simpleDiv(int c, int z) : c(c), z(z) {
         if (z == 0) {
             exit('2');
@@ -82,38 +81,66 @@ public:
             c -= d.c;
         }
     }
+   static void conv(simpleDiv &t) {
+        int a = t.c;
+        int b = t.z;
+        if (a < 0)
+            a *= -1;
+        if (b < 0)
+            b *= -1;
+        if (b == 0 || a == 0) {
+            return;
+        }
+        while (a - b != 0) {
+            if (a > b)
+                a -= b;
+            else
+                b -= a;
+        }
+
+        t.c /= a;
+        t.z /= b;
+        if (t.c < 0 && t.z < 0) {
+            t.c /= -1;
+            t.z /= -1;
+        }
+        if (t.c > 0 && t.z < 0) {
+            t.c /= -1;
+            t.z /= -1;
+        }
+    };
 };
 
-void conv(simpleDiv &t) {
-    int a = t.c;
-    int b = t.z;
-    if (a < 0)
-        a *= -1;
-    if (b < 0)
-        b *= -1;
-    if (b == 0 || a == 0) {
-        return;
-    }
-    while (a - b != 0) {
-        if (a > b)
-            a -= b;
-        else
-            b -= a;
-    }
-
-    t.c /= a;
-    t.z /= b;
-    if (t.c < 0 && t.z < 0) {
-        // cout<<"asd";
-        t.c /= -1;
-        t.z /= -1;
-    }
-    if (t.c > 0 && t.z < 0) {
-        // cout<<"asd";
-        t.c /= -1;
-        t.z /= -1;
-    }
-};
+//void conv(simpleDiv &t) {
+//    int a = t.c;
+//    int b = t.z;
+//    if (a < 0)
+//        a *= -1;
+//    if (b < 0)
+//        b *= -1;
+//    if (b == 0 || a == 0) {
+//        return;
+//    }
+//    while (a - b != 0) {
+//        if (a > b)
+//            a -= b;
+//        else
+//            b -= a;
+//    }
+//
+//    t.c /= a;
+//    t.z /= b;
+//    if (t.c < 0 && t.z < 0) {
+//        // cout<<"asd";
+//        t.c /= -1;
+//        t.z /= -1;
+//    }
+//    if (t.c > 0 && t.z < 0) {
+//        // cout<<"asd";
+//        t.c /= -1;
+//        t.z /= -1;
+//    }
+//};
 
 int PerformOperation(simpleDiv a[][M]) {
     int i, j, k = 0, c, flag = 0, m = 0;
@@ -157,7 +184,7 @@ void PrintResult(simpleDiv a[][M], int flag) {
         for (int i = 0; i < n; i++) {
             simpleDiv t = a[i][n];
             t.div(a[i][i]);
-            conv(t);
+            simpleDiv::conv(t);
             cout << t.show() << " ";
         }
     }
@@ -166,7 +193,7 @@ void PrintResult(simpleDiv a[][M], int flag) {
 void PrintMatrix(simpleDiv a[][M]) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j <= n; j++) {
-            conv(a[i][j]);
+            simpleDiv::conv(a[i][j]);
             cout << a[i][j].show() << " ";
         }
         cout << endl;
