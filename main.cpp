@@ -6,12 +6,12 @@ using namespace std;
 #define M 4//уравнений
 #define n 3// переменные
 
-class simpleDiv {
+class simpleFrac {
 public:
     int c;
     int z;
     int res;
-    simpleDiv(int c, int z) : c(c), z(z) {
+    simpleFrac(int c, int z) : c(c), z(z) {
         if (z == 0) {
             exit('2');
         }
@@ -20,7 +20,7 @@ public:
         }
     };
 
-    explicit simpleDiv(int c) : c(c), z(1) {
+    explicit simpleFrac(int c) : c(c), z(1) {
 
         if (ceil((float) c / (float) z) == (float) c / (float) z) {
             res = ceil((float) c / (float) z);
@@ -44,17 +44,17 @@ public:
         c *= d;
     }
 
-    void div(simpleDiv d) {
+    void div(simpleFrac d) {
         z *= d.c;
         c *= d.z;
     }
 
-    void mult(simpleDiv d) {
+    void mult(simpleFrac d) {
         c *= d.c;
         z *= d.z;
     }
 
-    void plus(simpleDiv d) {
+    void plus(simpleFrac d) {
         if (z == d.z) {
             c += d.c;
         } else {
@@ -68,7 +68,7 @@ public:
         }
     }
 
-    void minus(simpleDiv d) {
+    void minus(simpleFrac d) {
         if (z == d.z) {
             c -= d.c;
         } else {
@@ -81,7 +81,7 @@ public:
             c -= d.c;
         }
     }
-   static void conv(simpleDiv &t) {
+   static void conv(simpleFrac &t) {
         int a = t.c;
         int b = t.z;
         if (a < 0)
@@ -111,7 +111,7 @@ public:
     };
 };
 
-//void conv(simpleDiv &t) {
+//void conv(simpleFrac &t) {
 //    int a = t.c;
 //    int b = t.z;
 //    if (a < 0)
@@ -142,9 +142,9 @@ public:
 //    }
 //};
 
-int PerformOperation(simpleDiv a[][M]) {
+int PerformOperation(simpleFrac a[][M]) {
     int i, j, k = 0, c, flag = 0, m = 0;
-    simpleDiv pro(1);
+    simpleFrac pro(1);
     for (i = 0; i < n; i++) {
         if (a[i][i].c == 0) {
             c = 1;
@@ -159,7 +159,7 @@ int PerformOperation(simpleDiv a[][M]) {
         }
         for (j = 0; j < n; j++) {
             if (i != j) {
-                simpleDiv h = a[j][i];
+                simpleFrac h = a[j][i];
                 h.div(a[i][i]);
                 pro = h;
                 for (k = 0; k <= n; k++) {
@@ -174,7 +174,7 @@ int PerformOperation(simpleDiv a[][M]) {
     return flag;
 }
 
-void PrintResult(simpleDiv a[][M], int flag) {
+void PrintResult(simpleFrac a[][M], int flag) {
     cout << "Result is : ";
     if (flag == 2)
         cout << "Infinite Solutions Exists" << endl;
@@ -182,18 +182,18 @@ void PrintResult(simpleDiv a[][M], int flag) {
         cout << "No Solution Exists" << endl;
     else {
         for (int i = 0; i < n; i++) {
-            simpleDiv t = a[i][n];
+            simpleFrac t = a[i][n];
             t.div(a[i][i]);
-            simpleDiv::conv(t);
+            simpleFrac::conv(t);
             cout << t.show() << " ";
         }
     }
 }
 
-void PrintMatrix(simpleDiv a[][M]) {
+void PrintMatrix(simpleFrac a[][M]) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j <= n; j++) {
-            simpleDiv::conv(a[i][j]);
+            simpleFrac::conv(a[i][j]);
             cout << a[i][j].show() << " ";
         }
         cout << endl;
@@ -202,9 +202,9 @@ void PrintMatrix(simpleDiv a[][M]) {
 
 int main() {
 
-    simpleDiv a[n][M] = {{simpleDiv(3), simpleDiv(2), simpleDiv(-5), simpleDiv(-1)},
-                         {simpleDiv(2), simpleDiv(-1), simpleDiv(3), simpleDiv(13)},
-                         {simpleDiv(1), simpleDiv(2), simpleDiv(-1), simpleDiv(9)}};
+    simpleFrac a[n][M] = {{simpleFrac(3), simpleFrac(2), simpleFrac(-5), simpleFrac(-1)},
+                         {simpleFrac(2), simpleFrac(-1), simpleFrac(3), simpleFrac(13)},
+                         {simpleFrac(1), simpleFrac(2), simpleFrac(-1), simpleFrac(9)}};
     int flag = 0;
     flag = PerformOperation(a);
     PrintMatrix(a);
