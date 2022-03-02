@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-
+#include <cmath>
 using namespace std;
 
 #define M 4//уравнений
@@ -175,6 +175,17 @@ int PerformOperation(simpleFrac a[][M]) {
 }
 
 void PrintResult(simpleFrac a[][M], int flag) {
+    int _i,_f=0;
+    for (int i = 0; i < n; i++) {
+        simpleFrac t = a[i][n];
+        t.div(a[i][i]);
+        if(t.z==0){
+            _i=i;
+            _f=1;
+        }
+
+      //  cout << t.show() << " ";
+    }
     cout << "Result is : ";
     if (flag == 2)
         cout << "Infinite Solutions Exists" << endl;
@@ -185,7 +196,19 @@ void PrintResult(simpleFrac a[][M], int flag) {
             simpleFrac t = a[i][n];
             t.div(a[i][i]);
             simpleFrac::conv(t);
-            cout << t.show() << " ";
+            if(i==_i){
+                cout <<" "<< "x_"<<_i ;
+            }
+            else
+            cout <<" "<< t.show() ;
+            if(_f){
+                if(a[i][_i].c<0){
+                    cout<<"-x_"<<_i;
+                }
+                else if(a[i][_i].c>0){
+                    cout<<"+x_"<<_i;
+                }
+            }
         }
     }
 }
@@ -202,9 +225,9 @@ void PrintMatrix(simpleFrac a[][M]) {
 
 int main() {
 
-    simpleFrac a[n][M] = {{simpleFrac(3), simpleFrac(2), simpleFrac(-5), simpleFrac(-1)},
-                         {simpleFrac(2), simpleFrac(-1), simpleFrac(3), simpleFrac(13)},
-                         {simpleFrac(1), simpleFrac(2), simpleFrac(-1), simpleFrac(9)}};
+    simpleFrac a[n][M] = {{simpleFrac(1), simpleFrac(1), simpleFrac(0), simpleFrac(0)},
+                         {simpleFrac(0), simpleFrac(0), simpleFrac(0), simpleFrac(0)},
+                         {simpleFrac(0), simpleFrac(0), simpleFrac(1), simpleFrac(0)}};
     int flag = 0;
     flag = PerformOperation(a);
     PrintMatrix(a);
